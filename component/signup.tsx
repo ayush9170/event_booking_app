@@ -25,7 +25,7 @@ import { ChangeEventHandler, useState } from "react";
                             setPassword(e.target.value)
                         }} label="Password" type={"password"} placeholder="123456" />
                         <button onClick={async () => {
-                            const response = await axios.post("http://localhost:3000/api/user", {
+                            const response = await axios.post("http://localhost:3003/api/event/user", {
                                 username,
                                 password
                             });
