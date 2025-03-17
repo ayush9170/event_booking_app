@@ -1,7 +1,7 @@
-import { Signin } from "@/component/signin";
+import { SignIn } from "@/component/signin";
 
 
 export default function() {
-    return <Signin />
+    return <SignIn />
 }
 

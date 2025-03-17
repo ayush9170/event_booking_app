@@ -4,8 +4,9 @@ import { useRouter } from "next/navigation";
 import { ChangeEventHandler, useState } from "react";
 
  export function Signup() {
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    
     const router = useRouter();
 
     return <div className="h-screen flex justify-center flex-col">
@@ -19,14 +20,14 @@ import { ChangeEventHandler, useState } from "react";
                     </div>
                     <div className="pt-2">
                         <LabelledInput onChange={(e) => {
-                            setUsername(e.target.value);
+                            setEmail(e.target.value);
                         }} label="Username" placeholder="harkirat@gmail.com" />
                         <LabelledInput onChange={(e) => {
                             setPassword(e.target.value)
                         }} label="Password" type={"password"} placeholder="123456" />
                         <button onClick={async () => {
-                            const response = await axios.post("http://localhost:3003/api/event/user", {
-                                username,
+                            const response = await axios.post("http://localhost:3000/api/user", {
+                                email,
                                 password
                             });
                             router.push("/")

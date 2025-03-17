@@ -8,7 +8,7 @@ export async function POST(req:NextRequest){
 
     await prisma.user.create({
         data: {
-            username: data1.username,
+            email: data1.email,
             password: data1.password
            
           },
@@ -18,6 +18,3 @@ export async function POST(req:NextRequest){
         message: "signup succesfully"
       })
 }
-
-
-
