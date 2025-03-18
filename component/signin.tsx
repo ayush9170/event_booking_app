@@ -1,7 +1,11 @@
 import { signIn } from "./auth"
-
+import { auth } from "./auth";
+import { redirect } from "next/navigation";
  
-export function SignIn() {
+export async function SignIn() {
+  const session = await auth();
+  if (session) redirect("/");
+
   return (
     <form
       action={async (formData) => {

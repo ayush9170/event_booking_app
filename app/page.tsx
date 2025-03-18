@@ -1,16 +1,22 @@
+// import { SignOut } from "@/components/sign-out";
+import { auth } from "@/component/auth";
+import { redirect } from "next/navigation";
 
 
+const Page = async () => {
+  const session = await auth();
+  if (!session) redirect("/sign-in");
 
-import { useSession } from 'next-auth/react';
+  return (
+    <>
+      <div className="bg-gray-100 rounded-lg p-4 text-center mb-6">
+        <p className="text-gray-600">Signed in as:</p>
+        <p className="font-medium text-black">{session.user?.email}</p>
+      </div>
 
-const Dashboard = () => {
-  const { data: session } = useSession();
-
-  if (!session) {
-    return <p>You need to be signed in to view this page.</p>;
-  }
-
-  return <div>Welcome to your dashboard, !</div>;
+     
+    </>
+  );
 };
 
-export default Dashboard;
+export default Page;
