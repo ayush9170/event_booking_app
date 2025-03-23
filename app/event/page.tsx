@@ -1,5 +1,9 @@
 import {AddEvent} from "@/component/event";
+import { auth } from "@/component/auth";
 
-export default function() {
-    return <AddEvent />
+export default async function() {
+
+    return   <AddEvent/>
+      
+      
 }

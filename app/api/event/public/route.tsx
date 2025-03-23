@@ -10,8 +10,8 @@ export async function POST(req:NextRequest){
 
     await prisma.events.create({
         data: {
-           title: data1.email,
-           description: data1.password,
+           title: data1.title,
+           description: data1.description,
            userId : data1.userId ,
            
           },

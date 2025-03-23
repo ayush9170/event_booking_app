@@ -2,21 +2,21 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { ChangeEventHandler, useState } from "react";
-import { auth } from "./auth";
+import { useSession } from "next-auth/react"
 
 
 export  function AddEvent(){
     const [title, setTitle] = useState<string>("");
-    // const session = await auth(); 
+    const { data: session } = useSession()
     const [description, setDescription] = useState<string>("");
     // const [ userId ,setUser]  = useState<string>("")
-
+    console.log(session); 
 
 
     const router = useRouter();
 
     return <div className="h-screen flex justify-center flex-col">
-           {/* {setUser( session?.user?.id )} */}
+          
     <div className="flex justify-center">
     <a href="#" className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 ">
             <div>
@@ -36,6 +36,7 @@ export  function AddEvent(){
                         const response = await axios.post("http://localhost:3000/api/event/public", {
                             title,
                             description,
+                            userId : session?.user.id
                             
                         });
                         router.push("/")

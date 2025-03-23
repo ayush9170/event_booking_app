@@ -23,8 +23,8 @@ model User {
   image         String?
   Events        Events[]
   sessions      Session[]
-  // Optional for WebAuthn support
-  Authenticator Authenticator[]
+  BOOKED          BOOKED_EVENT[] 
+ 
  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -35,14 +35,8 @@ model Events {
   userId            String  @db.ObjectId
   title              String
   description        String
- 
-  refresh_token     String? @db.String
-  access_token      String? @db.String
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.String
-  session_state     String?
+
+  
  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -63,27 +57,13 @@ model Session {
   updatedAt DateTime @updatedAt
 }
  
-model VerificationToken {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  identifier String
-  token      String
-  expires    DateTime
- 
-  @@unique([identifier, token])
-}
- 
-// Optional for WebAuthn support
-model Authenticator {
-  credentialID         String  @id @map("_id")
-  userId               String  @db.ObjectId
-  providerAccountId    String
-  credentialPublicKey  String
-  counter              Int
-  credentialDeviceType String
-  credentialBackedUp   Boolean
-  transports           String?
- 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
-  @@unique([userId, credentialID])
-}
+ model BOOKED_EVENT{
+    id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+ title              String
+  description        String
+
+  
+   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+ } 
+

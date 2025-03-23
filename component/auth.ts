@@ -48,35 +48,32 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   callbacks: {
-    async jwt({ token, account }) {
-      if (account?.provider === "credentials") {
-        token.credentials = true;
-      }
-      return token;
-    },
+   
+   async jwt ({token ,user}){
+if(user){
+  token.id = user.id
+}
+return token
+   },
+   async session({session ,token}){
+    if(session.user){
+      session.user.id = token.id as string 
+    }
+    return session
+   }
+  
   },
-  jwt: {
-    encode: async function (params) {
-      if (params.token?.credentials) {
-        const sessionToken = uuid();
-
-        if (!params.token.sub) {
-          throw new Error("No user ID found in token");
-        }
-
-        const createdSession = await adapter?.createSession?.({
-          sessionToken: sessionToken,
-          userId: params.token.sub,
-          expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-        });
-
-        if (!createdSession) {
-          throw new Error("Failed to create session");
-        }
-
-        return sessionToken;
-      }
-      return defaultEncode(params);
-    },
+  pages :{
+    signIn :"/signin",
+    error : "/login"
   },
+  session:{
+    strategy:"jwt",
+    maxAge :30*24*60*60
+  },
+  secret :  process.env.Next_Auth_secret
+ 
 });
+
+
+
