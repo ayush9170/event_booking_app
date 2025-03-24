@@ -1,19 +1,33 @@
 
 
-
 import Link from 'next/link';
 
 const Navbar = () => {
   return (
-    <div className='w-full h-100'>
-        <div className='flex justify-end items-center'>
-      <h1> BOOKING_APP</h1>
-<div>
-<Link href="/signin">signIn</Link>
-<Link href="/signup">signup</Link>
-</div>
-    </div>
-    </div>
+    <nav className="bg-gray-800 p-4">
+      <div className="max-w-7xl mx-auto flex items-center justify-between">
+        <div className="flex items-center space-x-4 justify-around">
+         Booking App
+        
+          <div className="hidden md:flex space-x-6  ">
+            <Link href="/">
+             Home
+            </Link>
+            <Link href="/about">
+            About
+            </Link>
+            <Link href="/signup">
+            Sign Up
+            </Link>
+            <Link href="/signin">
+             Sign In
+            </Link>
+          </div>
+        </div>
+
+      
+      </div>
+    </nav>
   );
 };
 

@@ -1,7 +1,7 @@
-// import { SignOut } from "@/components/sign-out";
+
 import { auth } from "@/component/auth";
 import { redirect } from "next/navigation";
-
+import Link from 'next/link';
 
 const Page = async () => {
   const session = await auth();
@@ -9,10 +9,7 @@ const Page = async () => {
 
   return (
     <>
-      <div className="bg-gray-100 rounded-lg p-4 text-center mb-6">
-        <p className="text-gray-600">Signed in as:</p>
-        <p className="font-medium text-black">{session.user?.id}</p>
-      </div>
+     <Link href="/event">Book event or add events</Link>
 
      
     </>
