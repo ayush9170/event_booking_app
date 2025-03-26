@@ -19,6 +19,7 @@ export default function Eventlist() {
   const [error, setError] = useState<string | null>(null);
   const { data: session } = useSession();
   const router = useRouter();
+
  
 
   useEffect(() => {
@@ -45,7 +46,7 @@ export default function Eventlist() {
               description: event.description,
               userId :session?.user.id
             })
-            console.log(event)
+           
   }
 
   return (
@@ -78,11 +79,11 @@ export default function Eventlist() {
           <h3 className="text-xl font-semibold text-gray-800">{event.title}</h3><br></br>
             <h3 className="text-xl font-semibold text-gray-800">{event.description}</h3>
           </div>
-          <button
+          <button   
             onClick={() => booked(event)}
             className="w-full py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
-            Book Event
+         Book Event
           </button>
         </li>
       ))}

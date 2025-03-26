@@ -28,7 +28,7 @@ export  function BookedEvent() {
     };
 
     fetchEvents();
-  }, []);
+  }, [events]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div className=" bg white"> error {error}</div>;
@@ -41,8 +41,17 @@ export  function BookedEvent() {
         <div className="mb-4">
         <h3 className="text-xl font-semibold text-gray-800">{event.title}</h3>
           <h3 className="text-xl font-semibold text-gray-800">{event.description}</h3>
+         
         </div>
-        
+        <button   className="w-full py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+         onClick={async ()=>{
+                         await axios.delete("http://localhost:3000/api/event/private",{
+                          data: {
+                            title: event.title
+                          }
+                  
+                         })
+          }}>DELETE EVENT </button>
       </li>
     ))}
   </ul>

@@ -36,3 +36,14 @@ export  async function GET(){
         message: "booked event successfully"
       })
   }
+
+  export async function DELETE( req :NextRequest){
+    const data = await req.json();
+    await prisma.bOOKED_EVENT.deleteMany({
+      where :{title : data.title}
+    });
+
+    return NextResponse.json({
+      message: "Deleted successfully"
+    })
+  }
