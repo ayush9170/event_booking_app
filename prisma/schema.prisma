@@ -36,6 +36,7 @@ model Events {
   title              String
   description        String
 
+
   
  
   createdAt DateTime @default(now())
@@ -62,6 +63,7 @@ model Session {
   userId            String  @db.ObjectId
  title              String
   description        String
+    Count              Int
 
   
    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)

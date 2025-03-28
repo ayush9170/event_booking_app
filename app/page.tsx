@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const Page = async () => {
   const session = await auth();
-  if (!session) redirect("/sign-in");
+  if (!session) redirect("/signin");
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-r from-gray-800 via-black to-gray-900">
@@ -32,7 +32,7 @@ const Page = async () => {
         </div>
       </div>
 
-      {/* Footer Section */}
+     
       <footer className="bg-gray-900 text-white py-6">
         <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
           <div className="text-sm text-gray-400">

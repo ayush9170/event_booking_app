@@ -1,8 +1,9 @@
 
-
+import { auth } from "./auth";
 import Link from 'next/link';
 
-const Navbar = () => {
+const Navbar = async() => {
+   const session = await auth();
   return (
     <nav className="bg-gray-800 p-4 shadow-md">
     <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -20,9 +21,12 @@ const Navbar = () => {
         <Link href="/signup" className="text-white hover:text-gray-300 transition-colors duration-300">
           Sign Up
         </Link>
-        <Link href="/signin" className="text-white hover:text-gray-300 transition-colors duration-300">
+        
+       {session ?  <Link href="/signout" className="text-white hover:text-gray-300 transition-colors duration-300">
+          signOut
+        </Link>  : <Link href="/signin" className="text-white hover:text-gray-300 transition-colors duration-300">
           Sign In
-        </Link>
+        </Link>}
       </div>
       
       </div>
