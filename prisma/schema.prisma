@@ -63,7 +63,7 @@ model Session {
   userId            String  @db.ObjectId
  title              String
   description        String
-    Count              Int
+    
 
   
    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)

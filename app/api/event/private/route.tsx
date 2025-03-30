@@ -28,7 +28,7 @@ export  async function GET(){
            title: data.title,
            description: data.description,
            userId : data.userId ,
-           Count : data.Count
+           
           },
       })
 

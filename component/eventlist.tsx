@@ -20,6 +20,7 @@ export default function Eventlist({cnt,setcnt}) {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const { data: session } = useSession();
+  const [bookedStatus, setBookedStatus] = useState<{ [key: string]: boolean }>({});
   
   const router = useRouter();
 
@@ -31,6 +32,13 @@ export default function Eventlist({cnt,setcnt}) {
         const response = await axios.get("http://localhost:3000/api/event/public");
         setEvents(response.data.events);
         setLoading(false);
+
+        const status = {};
+        for (const event of response.data.events) {
+          const isBooked = await find_event(event);
+          status[event.title] = isBooked;
+        }
+        setBookedStatus(status);
       } catch (err) {
         setError("Failed to fetch events.");
         setLoading(false);
@@ -43,14 +51,31 @@ export default function Eventlist({cnt,setcnt}) {
   if (loading) return <div>Loading...</div>;
   if (error) return <div> error {error}</div>;
 
+  async  function find_event(event: Event){
+    const response =  await axios.get("http://localhost:3000/api/event/custom",{
+      params: { title: event.title },
+        })
+
+        if (response.status === 200 && response.data.event) {
+          return true;
+        }
+        return false;
+}
+
+
   async function  booked(event: Event){
            await axios.post("http://localhost:3000/api/event/private",{
               title:event.title,
               description: event.description,
               userId :session?.user.id,
-              Count :1
+             
             })
-           
+          
+            setBookedStatus((prevState) => ({
+              ...prevState,
+              [event.title]: true,
+            }));
+            
   }
 
   return (
@@ -82,10 +107,16 @@ export default function Eventlist({cnt,setcnt}) {
             <h3 className="text-xl font-semibold text-gray-800">{event.description}</h3>
           </div>
           <button   
-            onClick={() => booked(event)}
+            onClick={async() => {
+              const isBooked = await find_event(event);
+              if (!isBooked) {
+                 booked(event);
+              }
+              else alert("you have already booked this event")
+            }}
             className="w-full py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
-         Book Event
+        {bookedStatus[event.title] ? "booked": "Book Event"} 
           </button>
         </li>
       ))}
