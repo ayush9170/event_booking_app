@@ -21,7 +21,7 @@ export default function Eventlist({cnt,setcnt}) {
   const [error, setError] = useState<string | null>(null);
   const { data: session } = useSession();
   const [bookedStatus, setBookedStatus] = useState<{ [key: string]: boolean }>({});
-  
+  const [search, setSearch] = useState('');
   const router = useRouter();
 
  
@@ -61,7 +61,9 @@ export default function Eventlist({cnt,setcnt}) {
         }
         return false;
 }
-
+const filteredList = events.filter((item) =>
+  item.title.toLowerCase().includes(search.toLowerCase())
+);
 
   async function  booked(event: Event){
            await axios.post("http://localhost:3000/api/event/private",{
@@ -99,9 +101,16 @@ export default function Eventlist({cnt,setcnt}) {
 
   {/* Main Content */}
   <div className="flex-grow ml-64 p-6 bg-gray-100 rounded-lg">
+  <input  className="w-full mb-5  outline-blue-500  shadow-md rounded-lg  bg-blur-sm"
+        type="text"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder="  Search..."
+      />
     <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {events.map((event) => (
-        <li key={event.userId} className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:scale-105">
+   
+      {filteredList.map((event) => (
+        <li key={event.createdAt} className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:scale-105">
           <div className="mb-4">
           <h3 className="text-xl font-semibold text-gray-800">{event.title}</h3><br></br>
             <h3 className="text-xl font-semibold text-gray-800">{event.description}</h3>

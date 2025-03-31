@@ -2,6 +2,7 @@
 import { auth } from "./auth";
 import Link from 'next/link';
 
+
 const Navbar = async() => {
    const session = await auth();
   return (
@@ -12,6 +13,7 @@ const Navbar = async() => {
       </div>
   
       <div className="hidden md:flex space-x-6">
+      
         <Link href="/" className="text-white hover:text-gray-300 transition-colors duration-300">
           Home
         </Link>
