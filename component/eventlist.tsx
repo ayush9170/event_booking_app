@@ -133,7 +133,7 @@ const filteredList = events.filter((item) =>
 
     {/* Plus Button at Bottom Right */}
     <button
-      onClick={() => {router.push("/event")}}
+      onClick={() => {router.push("/ai")}}
       className="absolute bottom-6 right-6 w-12 h-12 bg-blue-500 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-blue-600 transition duration-300"
     >
       <span className="text-2xl font-bold">+</span>
