@@ -1,10 +1,15 @@
+"use client"
 
-import { auth } from "./auth";
+import { useSession } from "next-auth/react"
 import Link from 'next/link';
+import { Side } from "./side_icon";
+import { useState } from "react";
 
 
-const Navbar = async() => {
-   const session = await auth();
+const Navbar = () => {
+  const { data: session } = useSession();
+   const [open,setOpen] = useState<boolean>(true)
+
   return (
     <nav className="bg-gray-800 p-4 shadow-md">
     <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -30,10 +35,28 @@ const Navbar = async() => {
           Sign In
         </Link>}
       </div>
+
+      <div  className=" md:hidden text-white">
+ <button onClick={()=>{setOpen(!open)}} ><Side></Side></button>
+      </div>
       
+      </div>
+
+
+      <div className={` bg-transparent  md:hidden ${open ? 'block' : 'hidden'} mt-4`}>
+        <Link href="#" className="block text-white py-2 px-4">Home</Link>
+        <Link href="#" className="block text-white py-2 px-4">About</Link>
+        {session ?  <Link href="/signout" className="block text-white py-2 px-4">
+          signOut
+        </Link>  : <Link href="/signin" className="block text-white py-2 px-4">
+          Sign In
+        </Link>}
+       
       </div>
     </nav>
   );
 };
 
 export default Navbar;
+
+

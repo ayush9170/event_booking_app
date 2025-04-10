@@ -3,8 +3,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation";
-
+import { Side } from "./side_icon";
 import Link from 'next/link';
+import { Arrow } from "./arrow";
 
 
 interface Event {
@@ -23,6 +24,7 @@ export default function Eventlist({cnt,setcnt}) {
   const [bookedStatus, setBookedStatus] = useState<{ [key: string]: boolean }>({});
   const [search, setSearch] = useState('');
   const router = useRouter();
+  const [open,setOpen] =  useState<boolean>(true)
 
  
 
@@ -83,9 +85,10 @@ const filteredList = events.filter((item) =>
   return (
     <div className="relative min-h-screen flex bg-black ">
        
-  <div className="w-64 bg-gray-900 text-white p-6 absolute left-0 top-0 bottom-0 flex flex-col justify-between shadow-lg">
+  <div className={`w-64 bg-gray-900 text-white  z-0 p-6 absolute left-0 top-0 bottom-0 flex flex-col justify-between shadow-lg transform transition-transform duration-300 ease-in-out  md:translate-x-0    ${open ? 'translate-x-0  z-20' : '-translate-x-full'} `}>
     <div>
-      <h2 className="text-2xl font-semibold mb-6">MAIN MENU</h2>
+    <div  className="flex items-center  justify-between"> <h2 className="text-2xl font-semibold mb-6">MAIN MENU</h2>
+      <button className="mb-5 cursor-pointer md:hidden" onClick={()=>{setOpen(!open)}}><Arrow></Arrow></button> </div> 
       <ul className="space-y-4">
         <li>
           <Link href="/booked_event">
@@ -93,20 +96,21 @@ const filteredList = events.filter((item) =>
           </Link>
         </li>
         <li>
-         <button onClick={()=>{setcnt(1)}}>ADD NEW EVENT</button>
+         <button className="cursor-pointer" onClick={()=>{setcnt(1)}}>ADD NEW EVENT</button>
         </li>
       </ul>
     </div>
   </div>
 
   {/* Main Content */}
-  <div className="flex-grow ml-64 p-6 bg-gray-100 rounded-lg">
+  <div className="flex-grow md:ml-64 p-6 bg-gray-100 rounded-lg z-10"><div  className="flex items-center">
+    <button className="md:hidden text-gray-900  mb-5 mr-3"  onClick={()=>{setOpen(!open)}}><Side></Side></button>
   <input  className="w-full mb-5  outline-blue-500  shadow-md rounded-lg  bg-blur-sm"
         type="text"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         placeholder="  Search..."
-      />
+      /> </div>
     <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
    
       {filteredList.map((event) => (
